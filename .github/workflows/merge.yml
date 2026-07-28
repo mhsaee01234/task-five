@@ -6,6 +6,9 @@ on:
       - dev-saee1
       - dev-saee2
 
+permissions:
+  contents: write
+
 jobs:
   merge:
     runs-on: ubuntu-latest
