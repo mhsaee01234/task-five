@@ -1,0 +1,29 @@
+name: Auto Merge to Development
+
+on:
+  push:
+    branches:
+      - dev-saee1
+      - dev-saee2
+
+jobs:
+  merge:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Configure Git
+        run: |
+          git config user.name "github-actions"
+          git config user.email "github-actions@github.com"
+
+      - name: Merge into development
+        run: |
+          git fetch origin
+          git checkout development
+          git merge origin/${{ github.ref_name }} --no-edit
+          git push https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git development
